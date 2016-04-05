@@ -1,0 +1,386 @@
+<!DOCTYPE html>
+<html lang="zh" class="no-js">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+    <title>与小A聊天 - Abletive 音乐社区</title>
+    <meta name="description" content="小 A，Abletive 音乐社区的智能机器人 AI，你的专属聊天伙伴" />
+    <meta name="keywords" content="abletive,小A,launchpad,ableton live" />
+    <meta name="author" content="Cali" />
+    <link rel="shortcut icon" href="favicon.ico">
+    <link rel="stylesheet" type="text/css" href="css/normalize.css" />
+    <link rel="stylesheet" type="text/css" href="fonts/font-awesome-4.3.0/css/font-awesome.min.css" />
+    <link rel="stylesheet" type="text/css" href="fonts/vicons/vicons-font.css" />
+    <link rel="stylesheet" type="text/css" href="css/base.css" />
+    <link rel="stylesheet" type="text/css" href="css/chat.css" />
+    <link rel="stylesheet" type="text/css" href="css/dialog.css">
+    <!--[if IE]>
+  		<script src="http://html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+		<![endif]-->
+</head>
+
+<body class="chat-demo">
+    <div class="container">
+        <header class="codrops-header">
+            <h1>你的专属小A <span> <a href="http://abletive.com">Abletive</a></span></h1>
+            <nav class="codrops-demos">
+                <a href="javascript:void(0)" id="trigger-about-dialog" data-panel="about">小A的详情</a>
+                <a href="javascript:void(0)" id="trigger-help-dialog" data-panel="help">帮助</a>
+                <a href="javascript:void(0)" id="trigger-wechat-dialog" data-panel="wechat">微信公众号~</a>
+            </nav>
+        </header>
+        <div class="content">
+            <div class="chat-window">
+                <div class="chat-messages">
+                    <a href="javascript:void(0)" id="pull-button">点击加载更多</a>
+                    <ol class="chat-messages-list">
+                        <li class="chat-message chat-message-friend">
+                            <div class="chat-message-avatar">
+                                <img src="images/a-avatar.png" alt="">
+                            </div>
+                            <div class="chat-message-bubble">
+                                嗨😄, 有什么可以帮到你的？尽管问我吧
+                            </div>
+                            <div class="chat-message-arrow"></div>
+                        </li>
+                    </ol>
+                </div>
+                <!-- Chat Input Field -->
+                <div class="chat-input-bar">
+                    <div class="chat-info-container">
+                    </div>
+                    <div class="chat-effect-container">
+                        <div class="chat-effect-bar"></div>
+                    </div>
+                    <div class="chat-input-wrapper">
+                        <button class="chat-input-tool">
+                            <i class="icon icon-camera"></i>
+                        </button>
+                        <div class="chat-input" contenteditable></div>
+                        <button class="chat-send">
+                            <i class="fa fa-paper-plane"></i>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- Gooey Effect -->
+        <svg xmlns="http://www.w3.org/2000/svg" version="1.1" width="800">
+            <defs>
+                <filter id="goo">
+                    <feGaussianBlur in="SourceGraphic" stdDeviation="10" result="blur" />
+                    <feColorMatrix in="blur" mode="matrix" values="1 0 0 0 0  0 1 0 0 0  0 0 1 0 0  0 0 0 19 -9" result="goo" />
+                    <feComposite in="SourceGraphic" in2="goo" />
+                </filter>
+            </defs>
+        </svg>
+        <div class="dialog" id="login-dialog">
+            <div class="mover-wrap dialog__content">
+                <div class="handle"></div>
+                <div class="mover">
+                    <div class="dialog__content-inner">
+                        <div class="dialog__header">
+                            <h2>登录账户</h2>
+                            <button class="action action--close">
+                                <i class="fa fa-close"></i>
+                                <span class="text-hidden">关闭弹窗</span>
+                            </button>
+                        </div>
+                        <div class="dialog__body">
+                            <form class="actions">
+                                <div class="mover__element">
+                                    <input type="text" id="user-login" name="username" placeholder="您的用户名..." class="action">
+                                </div>
+                                <div class="mover__element">
+                                    <input type="password" id="user-pass" name="password" placeholder="您的密码..." class="action">
+                                </div>
+                                <div class="mover__element">
+                                    <a href="http://abletive.com/" target="_blank" class="action action--share">
+                                        <span class="action__title">还没有帐号？</span>
+                                        <span class="action__subline">前往注册</span>
+                                    </a>
+                                </div>
+                            </form>
+                        </div>
+                        <div class="dialog__footer">
+                            <a href="javascript:void(0)" onclick="submitLogin()" id="login-button">登录</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="dialog" id="about-dialog">
+            <div class="mover-wrap dialog__content">
+                <div class="handle"></div>
+                <div class="mover">
+                    <div class="dialog__content-inner">
+                        <div class="dialog__header">
+                            <h2>关于小A</h2>
+                            <button class="action action--close">
+                                <i class="fa fa-close"></i>
+                                <span class="text-hidden">关闭弹窗</span>
+                            </button>
+                        </div>
+                        <div class="dialog__body">
+                            <div class="actions">
+                                <div class="mover__element">
+                                    <div class="action">
+                                        <p>小A诞生于2015-09-18，由Cali开发创造</p>
+                                        <img src="images/a.png" width="100%" alt="">
+                                    </div>
+                                </div>
+                                <div class="mover__element">
+                                    <div class="action">
+                                        <p>你可以问小A关于 Live/Launchpad 的问题</p>
+                                        <p>也可以调侃小A与她玩</p>
+                                        <span>用社区帐号登录即可让小A保存聊天记录哦</span>
+                                        <span>发送『我的小A/查看等级/查看技能』可以查看你的专属小A的详情哦~</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="dialog__footer">
+                            <a href="javascript:void(0)" id="close-about-dialog">了解</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="dialog" id="help-dialog">
+            <div class="mover-wrap dialog__content">
+                <div class="handle"></div>
+                <div class="mover">
+                    <div class="dialog__content-inner">
+                        <div class="dialog__header">
+                            <h2>帮助</h2>
+                            <button class="action action--close">
+                                <i class="fa fa-close"></i>
+                                <span class="text-hidden">关闭弹窗</span>
+                            </button>
+                        </div>
+                        <div class="dialog__body">
+                            <div class="actions">
+                                <div class="mover__element">
+                                    <div class="action">
+                                        <p>FAQ:</p>
+                                        <span>你可以问：我的工程没灯光怎么解决<br />也可以问：没声音怎么办<br />不过聊天过程中千万不要爆脏话哦</span>
+                                    </div>
+                                </div>
+                                <div class="mover__element">
+                                    <div class="action">
+                                        <p>小 A 技能列表：</p>
+                                        <span>Lv1『天气通』、『天气先知』<br />Lv2 『幽默达人』、『新闻达人』<br>Lv3 『好图分享』、『回望历史』、『猜一猜』<br>Lv4 『人工词典』、『微信精选』<br>Lv5 『本月票房』、『全球票房』<br>Lv6 『视频分享』<br>Lv7 『音频分享』<br>Lv8 『深夜福利』<br>Lv9 『养眼福利』<br>Lv10 『音乐百科』</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="dialog__footer">
+                            <a href="javascript:void(0)" id="close-help-dialog">了解了</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="dialog" id="wechat-dialog">
+            <div class="mover-wrap dialog__content">
+                <div class="handle"></div>
+                <div class="mover">
+                    <div class="dialog__content-inner">
+                        <div class="dialog__header">
+                            <h2>微信公众号</h2>
+                            <button class="action action--close">
+                                <i class="fa fa-close"></i>
+                                <span class="text-hidden">关闭弹窗</span>
+                            </button>
+                        </div>
+                        <div class="dialog__body">
+                            <div class="actions">
+                                <div class="mover__element">
+                                    <div class="action">
+                                        <p>小A正式上线啦，现在在微信关注公众号就可以认领小A哦</p>
+                                        <p>扫描二维码(长按保存)或者通过 ID 搜索：ableton_china</p>
+                                        <img src="images/qrcode_for_gh_df59e5efaa32_430.jpg" width="100%" alt="">
+                                        
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="dialog__footer">
+                            <a href="javascript:void(0)" id="close-wechat-dialog">了解</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script src="js/jquery.min.js"></script>
+    <script src="js/TweenMax.min.js"></script>
+    <script>
+        function showAnswer(obj){
+            obj.children('span').fadeToggle(500);
+        }
+        
+        function setCookie(c_name, value, expiredays) {
+            var exdate = new Date()
+            exdate.setDate(exdate.getDate() + expiredays)
+            document.cookie = c_name + "=" + escape(value) +
+                ((expiredays == null) ? "" : ";expires=" + exdate.toGMTString())
+        }
+
+        function getCookie(c_name) {
+            if (document.cookie.length > 0) {
+                c_start = document.cookie.indexOf(c_name + "=")
+                if (c_start != -1) {
+                    c_start = c_start + c_name.length + 1
+                    c_end = document.cookie.indexOf(";", c_start)
+                    if (c_end == -1) c_end = document.cookie.length
+                    return unescape(document.cookie.substring(c_start, c_end))
+                }
+            }
+            return "";
+        }
+
+        function logout() {
+            setCookie('chat-logged-in', '', -1000000);
+            setTimeout(function () {
+                window.location.reload();
+            }, 500);
+        }
+        
+        var USER_ID = 0;
+        var USER_AVATAR = "";
+        
+        if (getCookie('chat-logged-in') != "") {
+            var cookie_full = getCookie('chat-logged-in');
+            USER_ID = cookie_full.substr(0, cookie_full.indexOf('|'));
+            jQuery.ajax({
+                url: "functions/get_avatar.php?user_id=" + USER_ID,
+                dataType: "json",
+                type: "GET",
+                success: function (results) {
+                    if (results['status'] == "ok") {
+                        USER_AVATAR = results['avatar'];
+                    }
+                }
+            });
+        }
+    </script>
+    <script src="js/chat.js"></script>
+    <script src="js/draggabilly.pkgd.min.js"></script>
+    <script src="js/dynamics.min.js"></script>
+    <script src="js/main.js"></script>
+    <script>
+        (function () {
+            var aboutDialog = new DialogEl(document.getElementById('about-dialog'), {
+                mainElement: {
+                    minscale: 0.6,
+                    minopacity: 0.5,
+                    //rX : 30,
+                    rY: 40
+                },
+                innerElements: {
+                    tx: 200,
+                    ty: 200
+                },
+                // the element is considered out of bounds if its center (x,y) is either 
+                // x < outofbounds.x or x > win.width-outofbounds.x or
+                // y < outofbounds.y or y > win.height - outofbounds.y
+                outofbounds: {
+                    x: 0,
+                    y: 0
+                }
+            });
+            document.getElementById('trigger-about-dialog').addEventListener('click', function (ev) {
+                aboutDialog.open();
+            });
+            document.getElementById('close-about-dialog').addEventListener('click', function (ev) {
+                aboutDialog.close();
+            });
+            
+            var helpDialog = new DialogEl(document.getElementById('help-dialog'), {
+                mainElement: {
+                    minscale: 0.6,
+                    minopacity: 0.5,
+                    //rX : 30,
+                    rY: 40
+                },
+                innerElements: {
+                    tx: 200,
+                    ty: 200
+                },
+                // the element is considered out of bounds if its center (x,y) is either 
+                // x < outofbounds.x or x > win.width-outofbounds.x or
+                // y < outofbounds.y or y > win.height - outofbounds.y
+                outofbounds: {
+                    x: 0,
+                    y: 0
+                }
+            });
+            document.getElementById('trigger-help-dialog').addEventListener('click', function (ev) {
+                helpDialog.open();
+            });
+            document.getElementById('close-help-dialog').addEventListener('click', function (ev) {
+                helpDialog.close();
+            });
+            
+            var wechatDialog = new DialogEl(document.getElementById('wechat-dialog'), {
+                mainElement: {
+                    minscale: 0.6,
+                    minopacity: 0.5,
+                    //rX : 30,
+                    rY: 40
+                },
+                innerElements: {
+                    tx: 200,
+                    ty: 200
+                },
+                // the element is considered out of bounds if its center (x,y) is either 
+                // x < outofbounds.x or x > win.width-outofbounds.x or
+                // y < outofbounds.y or y > win.height - outofbounds.y
+                outofbounds: {
+                    x: 0,
+                    y: 0
+                }
+            });
+            document.getElementById('trigger-wechat-dialog').addEventListener('click', function (ev) {
+                wechatDialog.open();
+            });
+            document.getElementById('close-wechat-dialog').addEventListener('click', function (ev) {
+                wechatDialog.close();
+            });
+            
+            if (getCookie('chat-logged-in') == "") {
+                $('.chat-messages-list').append('<li class="chat-message chat-message-friend"><div class="chat-message-avatar"><img src="images/a-avatar.png" alt=""></div><div class="chat-message-bubble">你还没有登录哦，所有的聊天将在刷新时清空，若想保存聊天记录请<a id="trigger-dialog" href="javascript:void(0)">点击登录</a></div><div class="chat-message-arrow"></div></li>');
+                var dialog = new DialogEl(document.getElementById('login-dialog'), {
+                    mainElement: {
+                        minscale: 0.6,
+                        minopacity: 0.5,
+                        //rX : 30,
+                        rY: 40
+                    },
+                    innerElements: {
+                        tx: 100,
+                        ty: 100
+                    },
+                    // the element is considered out of bounds if its center (x,y) is either 
+                    // x < outofbounds.x or x > win.width-outofbounds.x or
+                    // y < outofbounds.y or y > win.height - outofbounds.y
+                    outofbounds: {
+                        x: 0,
+                        y: 0
+                    }
+                });
+                document.getElementById('trigger-dialog').addEventListener('click', function (ev) {
+                    dialog.open();
+                });
+            } else {
+                var dialog = document.getElementById('login-dialog');
+                dialog.remove();
+            }
+        })();
+    </script>
+</body>
+
+</html>
